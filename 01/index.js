@@ -4,6 +4,8 @@ const fs = require('fs');
 // require the http module
 const http = require('http');
 
+// require the url module
+const url = require('url');
 
 
 /*------------------------------------*\
@@ -26,6 +28,7 @@ const http = require('http');
 
 
 /*** NON - BLOCKING, Asynchronous way of reading ad writing files - CALLBACK HELL! ***/
+
 // fs.readFile('./txt/start.txt', 'utf-8', (error, data1) => {
 //   if(error) return console.log('There was an error!');
 //   fs.readFile(`./txt/${data1}.txt`, 'utf-8', (error, data2) => {
@@ -44,18 +47,36 @@ const http = require('http');
 
 
 /*------------------------------------*\
-  BUILD A WEB SERVER
+  BUILD A WEB SERVER & ROUTING
 \*------------------------------------*/
 
 
 // create the server and store it into a variable
 const server = http.createServer((request, response) => {
-  response.end("Hello from the server");
+
+  // store the url of the request
+  const pathName = request.url;
+
+  // serve different responses depending on the url
+  if(pathName === "/" || pathName === "/overview") {
+    response.end("This is the OVERVIEW page");
+  } else if(pathName === "/product") {
+    response.end("This is the PRODUCT page");
+  } else {
+    response.writeHead(404, {
+      'Content-type': 'text/html',
+      'my-own-header': 'hello-world'
+    });
+    response.end("<h1>Page NOT FOUND</h1>");
+  }
+
 });
 
 // listen to incoming requests to our server form the client
 server.listen(8000, '127.0.0.1', () => {
   console.log('listening to requests on port 8000');
 }); 
+
+
 
 
