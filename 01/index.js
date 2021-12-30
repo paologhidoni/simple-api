@@ -46,9 +46,14 @@ const url = require('url');
 
 
 
-/*------------------------------------*\
-  BUILD A WEB SERVER & ROUTING
-\*------------------------------------*/
+/*----------------------------------------------------*\
+  BUILD A WEB SERVER, ROUTING, BUILDING A SIMPLE API
+\*----------------------------------------------------*/
+
+
+// Using the synchronous readFileSync() method to read the file only once, when the script starts, in the top level code
+const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
+const dataObject = JSON.parse(data);
 
 
 // create the server and store it into a variable
@@ -62,7 +67,14 @@ const server = http.createServer((request, response) => {
     response.end("This is the OVERVIEW page");
   } else if(pathName === "/product") {
     response.end("This is the PRODUCT page");
-  } else {
+  }else if(pathName === '/api'){
+
+    response.writeHead(200, {
+      'Content-type': 'application/json' // We specify that we are sending back json
+    });
+    response.end(data);
+
+  } else { // In this case there is an error and the content could not be retrieved
     response.writeHead(404, {
       'Content-type': 'text/html',
       'my-own-header': 'hello-world'
