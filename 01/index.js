@@ -51,8 +51,41 @@ const url = require('url');
 \*----------------------------------------------------*/
 
 
-// Using the synchronous readFileSync() method to read the file only once, when the script starts, in the top level code
+// Using the synchronous readFileSync() method to read the template files; 
+// This is done at the top level code when the script starts, outside of the request, in order to only execute it once instead of every time we get a request.
+// The fields will then change dynamically.
+const tempCard = fs.readFileSync(`${__dirname}/templates/template-card.html`, "utf-8");
+const tempOverview = fs.readFileSync(`${__dirname}/templates/template-overview.html`, "utf-8");
+const tempProduct = fs.readFileSync(`${__dirname}/templates/template-product.html`, "utf-8");
+
+// Function to dynamically replace the content inside of each product template
+const replaceTemplate = (template, product) => {
+
+  // Replace all instances of the placeholder inside the template with the value associated to a specific key inside the product object
+  let output = template.replace(/{%ID%}/g, product.id);
+
+  output = output.replace(/{%PRODUCTNAME%}/g, product.productName);
+  output = output.replace(/{%IMAGE%}/g, product.image);
+  output = output.replace(/{%ORIGIN%}/g, product.from);
+  output = output.replace(/{%NUTRIENTS%}/g, product.nutrients);
+  output = output.replace(/{%QUANTITY%}/g, product.quantity);
+  output = output.replace(/{%PRICE%}/g, product.price);
+  output = output.replace(/{%DESCRIPTION%}/g, product.description);
+
+  // If the product is not organic, the class "not-organic" will be added to the product instead of the placeholder
+  if (!product.organic) {
+    output = output.replace(/{%NOT_ORGANIC%}/g, "not-organic")
+  }
+
+  return output;
+
+};
+
+
+// Retrieve the data, the products stored into a Json file
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
+
+// Convert the data into an array of objects, our products
 const dataObject = JSON.parse(data);
 
 
@@ -62,19 +95,37 @@ const server = http.createServer((request, response) => {
   // store the url of the request
   const pathName = request.url;
 
-  // serve different responses depending on the url
+  // Overview page
   if(pathName === "/" || pathName === "/overview") {
-    response.end("This is the OVERVIEW page");
+
+    response.writeHead(200, {
+      'Content-type': 'text/html'
+    });
+
+    // Loop through each product we have in our dataObject array and for each one of them we return a template with all the placeholders replaced by the data stored inside the product. We store all the templates inside the cardsHtml array. We join all the templates into a single string.
+    const cardsHtml = dataObject.map(el => replaceTemplate(tempCard, el)).join('');
+
+    // Replace the "{%PRODUCT_ CARDS%}" placeholder inside the template-overview with our string that represents all the products
+    const output = tempOverview.replace('{%PRODUCT_CARDS%}', cardsHtml);
+
+    // Return the response
+    response.end(output);
+
+
+  // Product page
   } else if(pathName === "/product") {
     response.end("This is the PRODUCT page");
-  }else if(pathName === '/api'){
+
+  // API
+  } else if(pathName === '/api'){
 
     response.writeHead(200, {
       'Content-type': 'application/json' // We specify that we are sending back json
     });
     response.end(data);
 
-  } else { // In this case there is an error and the content could not be retrieved
+  // Not found - error
+  } else { 
     response.writeHead(404, {
       'Content-type': 'text/html',
       'my-own-header': 'hello-world'
@@ -84,7 +135,7 @@ const server = http.createServer((request, response) => {
 
 });
 
-// listen to incoming requests to our server form the client
+// listen to incoming requests to our server from the client
 server.listen(8000, '127.0.0.1', () => {
   console.log('listening to requests on port 8000');
 }); 
