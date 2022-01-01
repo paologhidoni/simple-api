@@ -58,9 +58,8 @@ const tempCard = fs.readFileSync(`${__dirname}/templates/template-card.html`, "u
 const tempOverview = fs.readFileSync(`${__dirname}/templates/template-overview.html`, "utf-8");
 const tempProduct = fs.readFileSync(`${__dirname}/templates/template-product.html`, "utf-8");
 
-// Function to dynamically replace the content inside of each product template
+// Function to dynamically replace the content inside of each product template; it receives a template and an object (product) containing the values to use.
 const replaceTemplate = (template, product) => {
-
   // Replace all instances of the placeholder inside the template with the value associated to a specific key inside the product object
   let output = template.replace(/{%ID%}/g, product.id);
 
@@ -76,10 +75,10 @@ const replaceTemplate = (template, product) => {
   if (!product.organic) {
     output = output.replace(/{%NOT_ORGANIC%}/g, "not-organic")
   }
-
   return output;
-
 };
+
+
 
 
 // Retrieve the data, the products stored into a Json file
@@ -88,15 +87,17 @@ const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 // Convert the data into an array of objects, our products
 const dataObject = JSON.parse(data);
 
-
 // create the server and store it into a variable
 const server = http.createServer((request, response) => {
+
+// Destructure two variables, query and pathname, from the object we obtain parsing the request url.
+const {query, pathname} = url.parse(request.url, true);
 
   // store the url of the request
   const pathName = request.url;
 
   // Overview page
-  if(pathName === "/" || pathName === "/overview") {
+  if(pathname === "/" || pathname === "/overview") {
 
     response.writeHead(200, {
       'Content-type': 'text/html'
@@ -113,11 +114,21 @@ const server = http.createServer((request, response) => {
 
 
   // Product page
-  } else if(pathName === "/product") {
-    response.end("This is the PRODUCT page");
+  } else if(pathname === "/product") {
+
+    // We specify that we are sending back html
+    response.writeHead(200, {'Content-type': 'text/html'});
+    // Find the product we want to display retrieving the element inside the dataObject array at index equal to the value of query.id
+    const product = dataObject[query.id];
+
+    // Replace all fields of the template-product with the values of the current product and store the result inside the output variable.
+    const output = replaceTemplate(tempProduct, product);
+
+    // Return the new product template will all the fields replaced
+    response.end(output);
 
   // API
-  } else if(pathName === '/api'){
+  } else if(pathname === '/api'){
 
     response.writeHead(200, {
       'Content-type': 'application/json' // We specify that we are sending back json
