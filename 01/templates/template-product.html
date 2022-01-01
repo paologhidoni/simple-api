@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta PRODUCTNAME="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link
       href="https://fonts.googleapis.com/css?family=Megrim|Nunito+Sans:400,900"
@@ -67,7 +67,7 @@
         margin: 0 auto;
       }
 
-      . {
+      .product {
         width: 60rem;
         margin: 0 auto;
         margin-top: 9rem;
@@ -76,13 +76,13 @@
         position: relative;
       }
 
-      .__hero {
+      .product__hero {
         position: relative;
         height: 22rem;
         overflow: hidden;
       }
 
-      .__hero::before {
+      .product__hero::before {
         content: '';
         display: block;
         height: 100%;
@@ -95,59 +95,59 @@
         z-index: 100;
       }
 
-      .__emoji {
+      .product__emoji {
         font-size: 15rem;
         position: absolute;
       }
 
-      .__emoji--1 {
+      .product__emoji--1 {
         top: -4rem;
         left: -2rem;
         z-index: 10;
       }
 
-      .__emoji--2 {
+      .product__emoji--2 {
         top: -6rem;
         left: 9rem;
       }
 
-      .__emoji--3 {
+      .product__emoji--3 {
         top: -4rem;
         right: 15rem;
       }
 
-      .__emoji--4 {
+      .product__emoji--4 {
         top: -5rem;
         right: 2rem;
         z-index: 10;
       }
 
-      .__emoji--5 {
+      .product__emoji--5 {
         bottom: -9rem;
         left: 18rem;
       }
 
-      .__emoji--6 {
+      .product__emoji--6 {
         bottom: -8rem;
         left: 5rem;
       }
 
-      .__emoji--7 {
+      .product__emoji--7 {
         bottom: -12rem;
         right: 14rem;
       }
 
-      .__emoji--8 {
+      .product__emoji--8 {
         bottom: -8rem;
         right: -2rem;
       }
 
-      .__emoji--9 {
+      .product__emoji--9 {
         top: -7rem;
         left: 19rem;
       }
 
-      .__organic {
+      .product__organic {
         position: absolute;
         top: -4rem;
         right: -4rem;
@@ -163,15 +163,15 @@
         justify-content: center;
       }
 
-      .__organic h5 {
+      .product__organic h5 {
         font-weight: 900;
         text-transform: uppercase;
         font-size: 1.8rem;
         color: white;
       }
 
-      .__back:link,
-      .__back:visited {
+      .product__back:link,
+      .product__back:visited {
         position: absolute;
         top: 2rem;
         left: 2rem;
@@ -190,12 +190,12 @@
         align-items: center;
       }
 
-      .__back:hover,
-      .__back:active {
+      .product__back:hover,
+      .product__back:active {
         background-color: #79e17b;
       }
 
-      .__PRODUCTNAME {
+      .product__name {
         background: linear-gradient(to bottom, #9be15d, #00e3ae);
         padding: 1rem;
         font-family: 'Megrim', sans-serif;
@@ -205,7 +205,7 @@
         word-spacing: 2px;
       }
 
-      .__details {
+      .product__details {
         background-color: #eee;
         padding: 4rem 6rem;
         font-size: 1.9rem;
@@ -214,14 +214,14 @@
         grid-gap: 1.5rem;
       }
 
-      .__description {
+      .product__description {
         padding: 5rem 6rem;
         font-size: 1.6rem;
         line-height: 1.8;
       }
 
-      .__link:link,
-      .__link:visited {
+      .product__link:link,
+      .product__link:visited {
         display: block;
         background-color: #79e17b;
         color: white;
@@ -239,13 +239,13 @@
         transition: all 0.3s;
       }
 
-      .__link:hover,
-      .__link:active {
+      .product__link:hover,
+      .product__link:active {
         background-color: #9be15d;
         transform: scale(1.1) skewX(-20deg);
       }
 
-      .__link span {
+      .product__link span {
         transform: skewX(20deg);
       }
 
@@ -269,37 +269,37 @@
     <div class="container">
       <h1>🌽 Node Farm 🥦</h1>
 
-      <figure class="">
-        <div class="__organic {%NOT_ORGANIC%}"><h5>Organic</h5></div>
-        <a href="#" class="__back">
+      <figure class="product">
+        <div class="product__organic"><h5>Organic</h5></div>
+        <a href="/overview" class="product__back">
           <span class="emoji-left">👈</span>Back
         </a>
-        <div class="__hero">
-          <span class="__emoji __emoji--1">{%IMAGE%}</span>
-          <span class="__emoji __emoji--2">{%IMAGE%}</span>
-          <span class="__emoji __emoji--3">{%IMAGE%}</span>
-          <span class="__emoji __emoji--4">{%IMAGE%}</span>
-          <span class="__emoji __emoji--5">{%IMAGE%}</span>
-          <span class="__emoji __emoji--6">{%IMAGE%}</span>
-          <span class="__emoji __emoji--7">{%IMAGE%}</span>
-          <span class="__emoji __emoji--8">{%IMAGE%}</span>
-          <span class="__emoji __emoji--9">{%IMAGE%}</span>
+        <div class="product__hero">
+          <span class="product__emoji product__emoji--1">{%IMAGE%}</span>
+          <span class="product__emoji product__emoji--2">{%IMAGE%}</span>
+          <span class="product__emoji product__emoji--3">{%IMAGE%}</span>
+          <span class="product__emoji product__emoji--4">{%IMAGE%}</span>
+          <span class="product__emoji product__emoji--5">{%IMAGE%}</span>
+          <span class="product__emoji product__emoji--6">{%IMAGE%}</span>
+          <span class="product__emoji product__emoji--7">{%IMAGE%}</span>
+          <span class="product__emoji product__emoji--8">{%IMAGE%}</span>
+          <span class="product__emoji product__emoji--9">{%IMAGE%}</span>
         </div>
-        <h2 class="__PRODUCTNAME">{%PRODUCTNAME%}</h2>
-        <div class="__details">
-          <p><span class="emoji-left">🌍</span>From {%ORIGIN%}</p>
-          <p><span class="emoji-left">❤️</span>{%NUTRIENTS%}</p>
-          <p><span class="emoji-left">📦</span>{%QUANTITY%}</p>
-          <p><span class="emoji-left">🏷</span>{%PRICE%}€</p>
+        <h2 class="product__name">{%PRODUCTNAME%}</h2>
+        <div class="product__details">
+          <p><span class="emoji-left">🌍</span> {%ORIGIN%}</p>
+          <p><span class="emoji-left">❤️</span> {%NUTRIENTS%}</p>
+          <p><span class="emoji-left">📦</span> {%QUANTITY%}</p>
+          <p><span class="emoji-left">🏷</span> {%PRICE%}</p>
         </div>
   
-        <a href="#" class="__link">
+        <a href="#" class="product__link">
           <span class="emoji-left">🛒</span>
           <span>Add to shopping card ({%PRICE%} €)</span>
         </a>
   
-        <p class="__description">
-         {%DESCRIPTION%}
+        <p class="product__description">
+          {%DESCRIPTION%}
         </p>
       </figure>
       
