@@ -1,9 +1,12 @@
+// MOULES
+const replaceTemplate = require('./modules/replaceTemplate');
+
+// VARIABLES
+
 // require the fs module
 const fs = require('fs');
-
 // require the http module
 const http = require('http');
-
 // require the url module
 const url = require('url');
 
@@ -57,29 +60,6 @@ const url = require('url');
 const tempCard = fs.readFileSync(`${__dirname}/templates/template-card.html`, "utf-8");
 const tempOverview = fs.readFileSync(`${__dirname}/templates/template-overview.html`, "utf-8");
 const tempProduct = fs.readFileSync(`${__dirname}/templates/template-product.html`, "utf-8");
-
-// Function to dynamically replace the content inside of each product template; it receives a template and an object (product) containing the values to use.
-const replaceTemplate = (template, product) => {
-  // Replace all instances of the placeholder inside the template with the value associated to a specific key inside the product object
-  let output = template.replace(/{%ID%}/g, product.id);
-
-  output = output.replace(/{%PRODUCTNAME%}/g, product.productName);
-  output = output.replace(/{%IMAGE%}/g, product.image);
-  output = output.replace(/{%ORIGIN%}/g, product.from);
-  output = output.replace(/{%NUTRIENTS%}/g, product.nutrients);
-  output = output.replace(/{%QUANTITY%}/g, product.quantity);
-  output = output.replace(/{%PRICE%}/g, product.price);
-  output = output.replace(/{%DESCRIPTION%}/g, product.description);
-
-  // If the product is not organic, the class "not-organic" will be added to the product instead of the placeholder
-  if (!product.organic) {
-    output = output.replace(/{%NOT_ORGANIC%}/g, "not-organic")
-  }
-  return output;
-};
-
-
-
 
 // Retrieve the data, the products stored into a Json file
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
