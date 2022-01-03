@@ -2,7 +2,7 @@
 
 module.exports = (template, product) => {
   // Replace all instances of the placeholder inside the template with the value associated to a specific key inside the product object
-  let output = template.replace(/{%ID%}/g, product.id);
+  let output = template.replace(/{%ID%}/g, product.slug);
 
   output = output.replace(/{%PRODUCTNAME%}/g, product.productName);
   output = output.replace(/{%IMAGE%}/g, product.image);

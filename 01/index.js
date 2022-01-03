@@ -1,14 +1,15 @@
 // MOULES
+
+// Node core modules
+const fs = require('fs'); // require the fs module
+const http = require('http'); // require the http module
+const url = require('url'); // require the url module
+
+// 3rd party modules
+const slugify = require('slugify');
+
+// User modules
 const replaceTemplate = require('./modules/replaceTemplate');
-
-// VARIABLES
-
-// require the fs module
-const fs = require('fs');
-// require the http module
-const http = require('http');
-// require the url module
-const url = require('url');
 
 
 /*------------------------------------*\
@@ -67,10 +68,16 @@ const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 // Convert the data into an array of objects, our products
 const dataObject = JSON.parse(data);
 
+// Create slugs for each product's name
+const slugs = dataObject.map(el => slugify(el.productName, { lower: true}));
+
+// Assign each products slug as a key to each product object inside the dataObject array.
+dataObject.forEach((el, i) => el.slug = slugs[i]);
+
 // create the server and store it into a variable
 const server = http.createServer((request, response) => {
 
-// Destructure two variables, query and pathname, from the object we obtain parsing the request url.
+// Destructure two variables, query and pathname,  from the object we obtain parsing the request url.
 const {query, pathname} = url.parse(request.url, true);
 
   // store the url of the request
