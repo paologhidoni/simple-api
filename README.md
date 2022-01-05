@@ -1,6 +1,6 @@
 # Learn Node
 
-This is a personal project I will keep updating while learning Node.
+Project to learn how to build a simpe API using Node.
 
 ## Main Goals
 
